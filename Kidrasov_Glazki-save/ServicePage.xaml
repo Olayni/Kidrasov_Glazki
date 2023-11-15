@@ -7,83 +7,106 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ServicePage">
-    
-    
+
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="10"></RowDefinition>
-            </Grid.RowDefinitions>
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="3">
+            <TextBlock Name="TBCount" FontSize="20" Height="30"></TextBlock>
+            <TextBlock Name="TBAllRecords" FontSize="20" Height="30"></TextBlock>
+            <Button Name="LeftDirButton" Content="&lt;" Width="30" Height="30" Grid.Row="2"  HorizontalAlignment="Right"  Background="#B175EE"
+        Click="LeftDirButton_Click"></Button>
+            <ListBox FontSize="15" Name="PageListBox" MouseUp="PageListBox_MouseUp" Grid.Row="2" HorizontalAlignment="Right" Height="30">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <Button Name="RightDirButton" Content="&gt;" Width="30" Height="30" Grid.Row="2" 
+        Click="RightDirButton_Click" HorizontalAlignment="Right" Background="#B175EE"></Button>
+        </StackPanel>
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBox Name="Search" Height="30" HorizontalAlignment="Left" Width="335"  Margin="0, 0, 10, 0" TextChanged="Search_TextChanged_1"/>
+                <TextBox Name="Search" Height="30" HorizontalAlignment="Left" Width="335"  Margin="0, 0, 10, 0" TextChanged="Search_TextChanged"/>
                 <ComboBox Name="ComboFilter" Grid.Row="0" Height="30" Width="205" HorizontalAlignment="Center" Margin="0, 0, 10, 0" SelectionChanged="ComboFilter_SelectionChanged">
-                        <TextBlock>Сортировка</TextBlock>
-                        <TextBlock>Наименование по возрастанию</TextBlock>
-                        <TextBlock>Наименование по убыванию</TextBlock>
-                        <TextBlock>Скидка по возрастанию</TextBlock>
-                        <TextBlock>Скидка по убыванию</TextBlock>
-                        <TextBlock>Приоритет по возрастанию</TextBlock>
-                        <TextBlock>Приоритет по убыванию</TextBlock>
-                    </ComboBox>
-                    <ComboBox Name="ComboType" Grid.Row="0" Height="30" Width="205" HorizontalAlignment="Right" Margin="0, 0, 0, 0" SelectionChanged="ComboType_SelectionChanged_1">
-                        <TextBlock>Все типы</TextBlock>
-                        <TextBlock>ЗАО</TextBlock>
-                        <TextBlock>МКК</TextBlock>
-                        <TextBlock>МФО</TextBlock>
-                        <TextBlock>ОАО</TextBlock>
-                        <TextBlock>ООО</TextBlock>
-                        <TextBlock>ПАО</TextBlock>
-                    </ComboBox>
-                </StackPanel>
-            </WrapPanel>
-            <ListView Name="AgentListView" Grid.Row="1" Grid.ColumnSpan="3" SelectionChanged="AgentListView_SelectionChanged"  Margin="0" HorizontalContentAlignment="Stretch">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="50"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <TextBlock>Сортировка</TextBlock>
+                    <TextBlock>Наименование по возрастанию</TextBlock>
+                    <TextBlock>Наименование по убыванию</TextBlock>
+                    <TextBlock>Скидка по возрастанию</TextBlock>
+                    <TextBlock>Скидка по убыванию</TextBlock>
+                    <TextBlock>Приоритет по возрастанию</TextBlock>
+                    <TextBlock>Приоритет по убыванию</TextBlock>
+                </ComboBox>
+                <ComboBox Name="ComboType" Grid.Row="0" Height="30" Width="205" HorizontalAlignment="Right" Margin="0, 0, 0, 0" SelectionChanged="ComboType_SelectionChanged">
+                    <TextBlock>Все типы</TextBlock>
+                    <TextBlock>ЗАО</TextBlock>
+                    <TextBlock>МКК</TextBlock>
+                    <TextBlock>МФО</TextBlock>
+                    <TextBlock>ОАО</TextBlock>
+                    <TextBlock>ООО</TextBlock>
+                    <TextBlock>ПАО</TextBlock>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+        <ListView Name="AgentListView" Grid.Row="1" Grid.ColumnSpan="3" SelectionChanged="AgentListView_SelectionChanged" Margin="0" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
                         <Image Width="150" Grid.Column="0" Grid.RowSpan="4"
                                Stretch="UniformToFill" HorizontalAlignment="Center" Margin="0, 0, 25, 0">
+                            <Image.Source>
+                                <Binding Path="Logo">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            Resources/picture.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
                         </Image>
-                            <TextBlock Text="{Binding AgentTypeString}" Grid.Column="1" Grid.Row="0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0, 10, 0, 0"></TextBlock>
-                            <TextBlock Text="{Binding Title, StringFormat= | {0}}" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 0, 0"></TextBlock>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0, 0, 0, 0">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text=" " FontSize="16" Grid.Row="0" VerticalAlignment="Center"></TextBlock>
-                                    <TextBlock Text="{Binding Phone}" FontSize="16" Grid.Row="1" VerticalAlignment="Center"></TextBlock>
-                                    <TextBlock Text="{Binding Priority, StringFormat=Приоритетность: {0}}" FontSize="16" Grid.Row="2" VerticalAlignment="Center"  Margin="0, 0, 0, 10"></TextBlock>
-                                </Grid>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                        <TextBlock Text="{Binding AgentTypeString}" Grid.Column="1" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 10, 0, 0"></TextBlock>
+                        <TextBlock Text="{Binding Title, StringFormat= | {0}}" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 0, 0"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0, 0, 0, 0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="   " FontSize="16" Grid.Row="0" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Text="{Binding Phone}" FontSize="16" Grid.Row="1" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Text="{Binding Priority, StringFormat=Приоритетность: {0}}" FontSize="16" Grid.Row="2" VerticalAlignment="Center"  Margin="0, 0, 0, 10"></TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </Page>
