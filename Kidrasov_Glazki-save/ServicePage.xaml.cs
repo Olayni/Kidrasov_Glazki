@@ -115,7 +115,7 @@ namespace Kidrasov_Glazki_save
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
         }
 
         private void ComboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -147,6 +147,7 @@ namespace Kidrasov_Glazki_save
         {
 
             var currentServices = Kidrasov_glazkiEntities.GetContext().Agent.ToList();
+
 
             if (ComboType.SelectedIndex == 1)
             {
@@ -215,6 +216,16 @@ namespace Kidrasov_Glazki_save
             ChangePage(0, 0);
         }
 
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                Kidrasov_glazkiEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                AgentListView.ItemsSource = Kidrasov_glazkiEntities.GetContext().Agent.ToList();
+            }
+            UpdateServices();
+        }
+
         private void Search_TextChanged_1(object sender, TextChangedEventArgs e)
         {
             UpdateServices();
@@ -231,6 +242,16 @@ namespace Kidrasov_Glazki_save
         private void RightDirButton_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(2, null);
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
         }
     }
 }
